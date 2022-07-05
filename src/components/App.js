@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { ajax } from "../utils/ajax-adapter";
 
 
 const App = () => {
@@ -20,6 +21,13 @@ const App = () => {
       [name]: value
     });
   };
+
+  useEffect(() => {
+    // poziva se svaki put kad se search forma promijeni
+    const q = formState.search;
+    console.log('aktiviramo hot search za rijeci: ', q);
+    ajax.getWeatherSearch(q);
+  }, [formState])
 
 
   return (

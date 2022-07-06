@@ -1,16 +1,15 @@
 import { useEffect, useState } from "react";
 import { ajax } from "../utils/ajax-adapter";
 import ForecastCard from "./ForecastCard";
+import ForecastToday from "./ForecastToday";
+import PinnedPlace from "./PinnedPlace";
+import Place from "./PinnedPlace";
 
 
 const App = () => {
 
+  const [pinned, setPinned] = useState([]);
   const [result, setResult] = useState({});
-
-  let resultReady = false;
-  if (result && result.city && result.city.id) {
-    resultReady = true;
-  }
 
   const preset = {
     search: ''
@@ -45,32 +44,46 @@ const App = () => {
           }
         })
     }
-  }, [q])
+  }, [q]);
 
-  let jsxResult = (
-    <div>No Results</div>
-  );
-  if (resultReady) {
-    jsxResult = (
-      <div>
-        <div>ID: {result.city.id}</div>
-        <div>Name: {result.city.name}</div>
-        <div>icon: {result.list[0].weather[0].main}</div>
-        <div>description: {result.list[0].weather[0].description}</div>
-        <div>Temperature: {result.list[0].temp.day}</div>
-        <div>Wind Speed: {result.list[0].speed}</div>
-      </div>
-    );
-  }
+  const _pinCity = (id) => {
+    if (pinned.includes(id)) {
+      // vec je pinovan ne treba ponovo
+    } else {
+      setPinned([...pinned, id]);
+    }
+  };
 
+  let jsxZeroResult = null;
+  let jsxToday = null;
   let jsxKartice = null;
   if (result.list && result.city) {
+
+    jsxToday = (
+      <>
+        <button type="button" onClick={(e) => {_pinCity(result.city.id)}}>PIN THIS CITY</button>
+        <ForecastToday city={result.city} item={result.list[0]} />
+      </>
+    );
     jsxKartice = result.list.map((item, index) => {
+      if (index === 0) {
+        return null;
+      }
       return (
         <ForecastCard key={index} city={result.city} item={item} />
       );
     });
+  } else {
+    jsxZeroResult = (
+      <div>No Results</div>
+    );
   }
+
+let jsxPinned = pinned.map((id) => {
+  return (
+    <PinnedPlace key={id} id={id}/>
+  );
+});
 
 
   return (
@@ -82,10 +95,18 @@ const App = () => {
         value={formState.search}
         onChange={handleChange}
       />
-      <h3>Forecast</h3>
+
+      {jsxZeroResult}
+
+      <h3>Today</h3>
+      {jsxToday}
+      <h3>5 Day Forecast</h3>
       <div className="list">
         {jsxKartice}
       </div>
+
+      <h2>Pinned Cities</h2>
+      {jsxPinned}
     </div>
   );
 };

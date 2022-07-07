@@ -50,7 +50,8 @@ const App = () => {
     if (pinned.includes(id)) {
       // vec je pinovan ne treba ponovo
     } else {
-      setPinned([...pinned, id]);
+      // setPinned([...pinned, id]);
+      setPinned([id, ...pinned]);
     }
   };
 
@@ -61,7 +62,7 @@ const App = () => {
 
     jsxToday = (
       <>
-        <button type="button" onClick={(e) => {_pinCity(result.city.id)}}>PIN THIS CITY</button>
+        <button type="button" onClick={(e) => { _pinCity(result.city.id) }}>PIN THIS CITY</button>
         <ForecastToday city={result.city} item={result.list[0]} />
       </>
     );
@@ -79,15 +80,21 @@ const App = () => {
     );
   }
 
-let jsxPinned = pinned.map((id) => {
-  return (
-    <PinnedPlace key={id} id={id}/>
-  );
-});
+  let jsxPinned = pinned.map((id) => {
+    return (
+      <PinnedPlace key={id} id={id} />
+    );
+  });
 
 
   return (
     <div>
+
+      <button type="button" onClick={(e) => { _pinCity(2643743) }}>London</button>
+      <button type="button" onClick={(e) => { _pinCity(2988507) }}>Paris</button>
+      <button type="button" onClick={(e) => { _pinCity(4219762) }}>Rome</button>
+      <button type="button" onClick={(e) => { _pinCity(4164138) }}>Miami</button>
+
       <input
         type="text"
         placeholder="Search"
@@ -97,14 +104,14 @@ let jsxPinned = pinned.map((id) => {
       />
 
       {jsxZeroResult}
-
-      <h3>Today</h3>
-      {jsxToday}
-      <h3>5 Day Forecast</h3>
-      <div className="list">
-        {jsxKartice}
+      <div className="search-result">
+        <h3>Today</h3>
+        {jsxToday}
+        <h3>5 Day Forecast</h3>
+        <div className="list">
+          {jsxKartice}
+        </div>
       </div>
-
       <h2>Pinned Cities</h2>
       {jsxPinned}
     </div>

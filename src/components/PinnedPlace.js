@@ -46,7 +46,7 @@ const PinnedPlace = (props) => {
   
 
   return (
-    <div>PINNED CITIES ID: {id}
+    <div className="pinned-place">PINNED CITIES ID: {id}
 
       <h3>Today</h3>
       {jsxToday}

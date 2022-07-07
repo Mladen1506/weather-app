@@ -12,6 +12,11 @@ body {
   padding: 0px;
 }
 
+header {
+  background-color: rgba(131, 168, 236, 0.3);
+  padding: 10px;
+}
+
 .list {
   display: flex;
   flex-direction: row;

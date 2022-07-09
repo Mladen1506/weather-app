@@ -25,7 +25,7 @@ const PageSearchResult = (props) => {
     }
   }, [q]);
 
-  const _pinCity = props._pinCity;
+  const addToFavourites = props.addToFavourites;
 
   let jsxZeroResult = null;
   let jsxToday = null;
@@ -34,7 +34,7 @@ const PageSearchResult = (props) => {
 
     jsxToday = (
       <>
-        <button type="button" onClick={(e) => { _pinCity(result.city.id) }}>PIN THIS CITY</button>
+        <button type="button" onClick={(e) => { addToFavourites(result.city.id) }}>PIN THIS CITY</button>
         <ForecastToday city={result.city} item={result.list[0]} />
       </>
     );
@@ -53,7 +53,7 @@ const PageSearchResult = (props) => {
   }
   return (
     <div className="page-search">
-      
+
       {jsxZeroResult}
       <div className="search-result">
         <h3>Today</h3>

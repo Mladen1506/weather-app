@@ -6,10 +6,14 @@
 html {
   font-size: 16px;
   font-family: "Roboto", sans-serif;
+  font-weight: 400;
+  color: white;
 }
 body {
   margin: 0px;
   padding: 0px;
+  background-color: gray;
+  background-color: #506094;
 }
 
 header {
@@ -40,8 +44,46 @@ header {
   padding: 10px;
   margin: 10px;
 }
-.pinned-place {
+.favourite-place {
   border: 2px solid gray;
-  padding: 10px;
-  margin: 10px;
+  padding: 20px;
+  margin: 20px;
+}
+
+.slide-show {
+}
+.slide-show .visible-frame {
+  position: relative;
+  border: 2px solid black;
+  width: 600px;
+  height: 400px;
+  overflow: hidden;
+}
+.slide-show .slides {
+  position: relative;
+  /*
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: stretch;
+  flex-wrap: nowrap;
+  */
+}
+.slide-show .slides .slide {
+  /* min-width: 600px; */
+  height: 400px;
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  width: 0px;
+  overflow: hidden;
+}
+
+.slide-show .slides .slide.visible {
+  width: 660px;
+}
+
+.slide-show .slides .slide.post-visible {
+  width: 0px;
+  right: 600px;
 }

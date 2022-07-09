@@ -1,14 +1,12 @@
-import { useEffect, useState } from "react";
-import { ajax } from "../utils/ajax-adapter";
-import ForecastCard from "./ForecastCard";
-import ForecastToday from "./ForecastToday";
+import { useState } from "react";
 import PageFavourites from "./PageFavourites";
+import PageFavouritesSlider from "./PageFavouritesSlider";
 import PageSearchResult from "./PageSearchResult";
 
 
 const App = () => {
 
-  const [pinned, setPinned] = useState([]);
+  const [favourites, setFavourites] = useState([]);
 
   const preset = {
     search: ''
@@ -30,22 +28,22 @@ const App = () => {
 
   const q = formState.search.trim();
 
-  const _pinCity = (id) => {
-    if (pinned.includes(id)) {
+  const _addToFavourites = (id) => {
+    if (favourites.includes(id)) {
       // vec je pinovan ne treba ponovo
     } else {
-      // setPinned([...pinned, id]);
-      setPinned([id, ...pinned]);
+      // setFavourites([...favourites, id]);
+      setFavourites([id, ...favourites]);
     }
   };
 
   return (
     <div>
       <header>
-        <button type="button" onClick={(e) => { _pinCity(2643743) }}>London</button>
-        <button type="button" onClick={(e) => { _pinCity(2988507) }}>Paris</button>
-        <button type="button" onClick={(e) => { _pinCity(4219762) }}>Rome</button>
-        <button type="button" onClick={(e) => { _pinCity(4164138) }}>Miami</button>
+        <button type="button" onClick={(e) => { _addToFavourites(2643743) }}>London</button>
+        <button type="button" onClick={(e) => { _addToFavourites(2988507) }}>Paris</button>
+        <button type="button" onClick={(e) => { _addToFavourites(4219762) }}>Rome</button>
+        <button type="button" onClick={(e) => { _addToFavourites(4164138) }}>Miami</button>
 
         <input
           type="text"
@@ -55,8 +53,9 @@ const App = () => {
           onChange={handleChange}
         />
       </header>
-      <PageSearchResult q={q} _pinCity={_pinCity} />
-      <PageFavourites favourites={pinned} />
+      <PageSearchResult q={q} addToFavourites={_addToFavourites} />
+      <PageFavouritesSlider favourites={favourites} />
+      <PageFavourites favourites={favourites} />
     </div>
   );
 };

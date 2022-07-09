@@ -1,4 +1,4 @@
-import PinnedPlace from "./PinnedPlace";
+import City from "./City";
 
 const PageFavourites = (props) => {
 
@@ -6,7 +6,7 @@ const PageFavourites = (props) => {
 
   let jsxFavourites = favourites.map((id) => {
     return (
-      <PinnedPlace key={id} id={id} />
+      <City key={id} id={id} />
     );
   });
 

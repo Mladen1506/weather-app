@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { actionRouteSet } from "../redux/actions";
+import { actionAddToFavourites, actionRouteSet } from "../redux/actions";
 import PageRouter from "./PageRouter";
 
 
@@ -8,7 +8,7 @@ const App = () => {
 
   const dispatch = useDispatch();
 
-  const [favourites, setFavourites] = useState([]);
+  // const [favourites, setFavourites] = useState([]);
 
   const preset = {
     search: ''
@@ -36,14 +36,19 @@ const App = () => {
     }
   }, [q]);
 
+  
   const _addToFavourites = (id) => {
+    /*
     if (favourites.includes(id)) {
       // vec je pinovan ne treba ponovo
     } else {
       // setFavourites([...favourites, id]);
       setFavourites([id, ...favourites]);
     }
+    */
+   dispatch(actionAddToFavourites(id));
   };
+  
 
   const handleClickHome = (e) => {
     dispatch(actionRouteSet('HOME'));
@@ -77,7 +82,7 @@ const App = () => {
         />
         <button type="button" onClick={handleClickSearch}>SEARCH</button>
       </header>
-      <PageRouter favourites={favourites} q={q} _addToFavourites={_addToFavourites} />
+      <PageRouter q={q} />
     </div>
   );
 };

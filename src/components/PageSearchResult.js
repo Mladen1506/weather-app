@@ -1,4 +1,6 @@
 import { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
+import { actionAddToFavourites } from "../redux/actions";
 import { ajax } from "../utils/ajax-adapter";
 import ForecastCard from "./ForecastCard";
 import ForecastToday from "./ForecastToday";
@@ -6,6 +8,7 @@ import ForecastToday from "./ForecastToday";
 
 const PageSearchResult = (props) => {
   
+  const dispatch = useDispatch();
   const q = props.q;
 
 
@@ -26,7 +29,10 @@ const PageSearchResult = (props) => {
     }
   }, [q]);
 
-  const addToFavourites = props.addToFavourites;
+  // const addToFavourites = props.addToFavourites;
+  const _addToFavourites = (id) => {
+    dispatch(actionAddToFavourites(id));
+  };
 
   let jsxZeroResult = null;
   let jsxToday = null;
@@ -35,7 +41,7 @@ const PageSearchResult = (props) => {
 
     jsxToday = (
       <>
-        <button type="button" onClick={(e) => { addToFavourites(result.city.id) }}>PIN THIS CITY</button>
+        <button type="button" onClick={(e) => { _addToFavourites(result.city.id) }}>PIN THIS CITY</button>
         <ForecastToday city={result.city} item={result.list[0]} />
       </>
     );

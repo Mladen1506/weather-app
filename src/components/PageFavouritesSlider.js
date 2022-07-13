@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import City from "./City";
 
 const PageFavouritesSlider = (props) => {
 
-  const favourites = props.favourites;
+  // const favourites = props.favourites;
+  const favourites = useSelector(state => state.favourites);
   
   const [visibleSlide, setVisibleSlide] = useState(0);
   

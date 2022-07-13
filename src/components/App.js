@@ -31,7 +31,7 @@ const App = () => {
   const q = formState.search.trim();
 
   useEffect(() => {
-    if(q !== '') {
+    if (q !== '') {
       dispatch(actionRouteSet('SEARCH'));
     }
   }, [q]);
@@ -49,6 +49,10 @@ const App = () => {
     dispatch(actionRouteSet('HOME'));
   };
 
+  const handleClickFavourites = (e) => {
+    dispatch(actionRouteSet('FAVOURITES'));
+  };
+
   const handleClickSearch = (e) => {
     dispatch(actionRouteSet('SEARCH'));
   };
@@ -58,6 +62,7 @@ const App = () => {
     <div>
       <header>
         <button type="button" onClick={handleClickHome}>HOME</button>
+        <button type="button" onClick={handleClickFavourites}>FAVOURITES</button>
         <button type="button" onClick={(e) => { _addToFavourites(2643743) }}>London</button>
         <button type="button" onClick={(e) => { _addToFavourites(2988507) }}>Paris</button>
         <button type="button" onClick={(e) => { _addToFavourites(4219762) }}>Rome</button>
@@ -72,7 +77,7 @@ const App = () => {
         />
         <button type="button" onClick={handleClickSearch}>SEARCH</button>
       </header>
-      <PageRouter favourites={favourites } q={q}/>
+      <PageRouter favourites={favourites} q={q} _addToFavourites={_addToFavourites} />
     </div>
   );
 };

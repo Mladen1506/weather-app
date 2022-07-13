@@ -1,10 +1,12 @@
-import { useState } from "react";
-import PageFavourites from "./PageFavourites";
-import PageFavouritesSlider from "./PageFavouritesSlider";
-import PageSearchResult from "./PageSearchResult";
+import { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
+import { actionRouteSet } from "../redux/actions";
+import PageRouter from "./PageRouter";
 
 
 const App = () => {
+
+  const dispatch = useDispatch();
 
   const [favourites, setFavourites] = useState([]);
 
@@ -28,6 +30,12 @@ const App = () => {
 
   const q = formState.search.trim();
 
+  useEffect(() => {
+    if(q !== '') {
+      dispatch(actionRouteSet('SEARCH'));
+    }
+  }, [q]);
+
   const _addToFavourites = (id) => {
     if (favourites.includes(id)) {
       // vec je pinovan ne treba ponovo
@@ -37,9 +45,19 @@ const App = () => {
     }
   };
 
+  const handleClickHome = (e) => {
+    dispatch(actionRouteSet('HOME'));
+  };
+
+  const handleClickSearch = (e) => {
+    dispatch(actionRouteSet('SEARCH'));
+  };
+
+
   return (
     <div>
       <header>
+        <button type="button" onClick={handleClickHome}>HOME</button>
         <button type="button" onClick={(e) => { _addToFavourites(2643743) }}>London</button>
         <button type="button" onClick={(e) => { _addToFavourites(2988507) }}>Paris</button>
         <button type="button" onClick={(e) => { _addToFavourites(4219762) }}>Rome</button>
@@ -52,10 +70,9 @@ const App = () => {
           value={formState.search}
           onChange={handleChange}
         />
+        <button type="button" onClick={handleClickSearch}>SEARCH</button>
       </header>
-      <PageSearchResult q={q} addToFavourites={_addToFavourites} />
-      <PageFavouritesSlider favourites={favourites} />
-      <PageFavourites favourites={favourites} />
+      <PageRouter favourites={favourites } q={q}/>
     </div>
   );
 };

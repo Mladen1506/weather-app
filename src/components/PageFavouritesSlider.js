@@ -1,20 +1,35 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import City from "./City";
 
 const PageFavouritesSlider = (props) => {
 
   const favourites = props.favourites;
-
+  
   const [visibleSlide, setVisibleSlide] = useState(0);
-
+  
   const _nextSlide = () => {
-    const max = favourites.length - 1;
-    if (visibleSlide === max) {
+    const maxIndex = favourites.length - 1;
+    if (visibleSlide >= maxIndex) {
       setVisibleSlide(0);
     } else {
       setVisibleSlide(visibleSlide + 1)
     }
   };
+
+
+  useEffect(() => {
+
+    const intervalId = setInterval(() => {  //assign interval to a variable to clear it.
+      // ovo je funkcija koju izvrsavamo na svaki interval
+      _nextSlide();
+    }, 2000);
+
+    // You need to clear your interval,
+    return () => clearInterval(intervalId); // This is important
+
+  }, [favourites, visibleSlide]);
+
+
 
   let jsxSlides = favourites.map((id, index) => {
     let cl = "slide";

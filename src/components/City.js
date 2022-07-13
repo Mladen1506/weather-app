@@ -39,7 +39,7 @@ const City = (props) => {
     });
   } else {
     jsxZeroResult = (
-      <div>No Results</div>
+      <div>no result</div>
     );
   }
 

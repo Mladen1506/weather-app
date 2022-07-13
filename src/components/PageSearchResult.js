@@ -5,8 +5,9 @@ import ForecastToday from "./ForecastToday";
 
 
 const PageSearchResult = (props) => {
-
+  
   const q = props.q;
+
 
   const [result, setResult] = useState({});
 
@@ -48,11 +49,12 @@ const PageSearchResult = (props) => {
     });
   } else {
     jsxZeroResult = (
-      <div>No Results</div>
+      <div>No Result</div>
     );
   }
   return (
     <div className="page-search">
+      <h2>Search Results</h2>
 
       {jsxZeroResult}
       <div className="search-result">

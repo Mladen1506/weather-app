@@ -1,14 +1,32 @@
 import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
-import { actionAddToFavourites, actionRouteSet } from "../redux/actions";
+import { useDispatch, useSelector } from "react-redux";
+import { actionAddToFavourites, actionRouteSet, FAVOURITE_INITIAL_LOAD } from "../redux/actions";
+import { readStoredFavourites, storeFavourites } from "../utils/favourites-storage-utils";
+import BtnIcon from './BtnIcon';
 import PageRouter from "./PageRouter";
+
 
 
 const App = () => {
 
   const dispatch = useDispatch();
+  const favourites = useSelector(state=> state.favourites);
+  const initialized = useSelector(state=> state.initialized);
 
-  // const [favourites, setFavourites] = useState([]);
+  useEffect(()=>{
+    const storedFavourites = readStoredFavourites();
+    dispatch({
+      type: FAVOURITE_INITIAL_LOAD,
+      payload: storedFavourites
+    })
+  }, []);
+
+  useEffect(()=>{
+    if (initialized){
+      storeFavourites(favourites);
+    }
+  }, [favourites, initialized]);
+
 
   const preset = {
     search: ''
@@ -38,14 +56,6 @@ const App = () => {
 
   
   const _addToFavourites = (id) => {
-    /*
-    if (favourites.includes(id)) {
-      // vec je pinovan ne treba ponovo
-    } else {
-      // setFavourites([...favourites, id]);
-      setFavourites([id, ...favourites]);
-    }
-    */
    dispatch(actionAddToFavourites(id));
   };
   
@@ -66,21 +76,18 @@ const App = () => {
   return (
     <div>
       <header>
-        <button type="button" onClick={handleClickHome}>HOME</button>
-        <button type="button" onClick={handleClickFavourites}>FAVOURITES</button>
-        <button type="button" onClick={(e) => { _addToFavourites(2643743) }}>London</button>
-        <button type="button" onClick={(e) => { _addToFavourites(2988507) }}>Paris</button>
-        <button type="button" onClick={(e) => { _addToFavourites(4219762) }}>Rome</button>
-        <button type="button" onClick={(e) => { _addToFavourites(4164138) }}>Miami</button>
-
-        <input
-          type="text"
-          placeholder="Search"
-          name="search"
-          value={formState.search}
-          onChange={handleChange}
-        />
-        <button type="button" onClick={handleClickSearch}>SEARCH</button>
+        <BtnIcon fa="fa fa-home" title="Home" handleClick={handleClickHome} />
+        <BtnIcon fa="fa fa-star-o" title="Favourites" handleClick={handleClickFavourites} />
+        <div className="search-field">
+          <input
+            type="text"
+            placeholder="Search"
+            name="search"
+            value={formState.search}
+            onChange={handleChange}
+          />
+        </div>
+        <BtnIcon fa="fa fa-search" title="Search" handleClick={handleClickSearch} />
       </header>
       <PageRouter q={q} />
     </div>

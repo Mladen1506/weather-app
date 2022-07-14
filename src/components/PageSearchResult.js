@@ -59,7 +59,7 @@ const PageSearchResult = (props) => {
     );
   }
   return (
-    <div className="page-search">
+    <div className="page page-search">
       <h2>Search Results</h2>
 
       {jsxZeroResult}

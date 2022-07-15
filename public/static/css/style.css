@@ -13,7 +13,7 @@ body {
   margin: 0px;
   padding: 0px;
   background-color: gray;
-  background-color: #506094;
+  background-color: rgb(123, 202, 229);
 }
 h1, h2, h3 {
   margin-top: 0px;
@@ -23,9 +23,8 @@ header {
   height: 48px;
   line-height: 48px;
   width: 100%;
-  background-color: rgba(0,0,0,0.2);
+  background-color: skyblue;
   font-size: 1.4rem;
-
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
